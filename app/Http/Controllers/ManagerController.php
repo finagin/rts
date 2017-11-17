@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Manager\Store;
-use App\Http\Requests\Manager\Update;
 use App\Models\User;
 use Illuminate\Http\Request;
+use App\Http\Requests\Manager\Store;
+use App\Http\Requests\Manager\Update;
 
 class ManagerController extends Controller
 {
@@ -93,7 +93,7 @@ class ManagerController extends Controller
     }
 
     /**
-     * Create or edit view
+     * Create or edit view.
      *
      * @param \App\Models\User $user
      *
@@ -101,7 +101,7 @@ class ManagerController extends Controller
      */
     protected function viewCreateOrEdit(User $user)
     {
-        if($user && $user->id && $user->type !== 'manager'){
+        if ($user && $user->id && $user->type !== 'manager') {
             return redirect(route('users.managers.index'))->withErrors(['type' => 'Ошибка типа пользователя.']);
         }
 
@@ -109,7 +109,7 @@ class ManagerController extends Controller
     }
 
     /**
-     * Insert or Update method
+     * Insert or Update method.
      *
      * @param \Illuminate\Http\Request $request
      * @param \App\Models\User $user

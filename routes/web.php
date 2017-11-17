@@ -19,7 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['prefix' => 'users', 'as' => 'users.',], function () {
+Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
     Route::resource('managers', 'ManagerController', [
         'only' => [
             'index',
