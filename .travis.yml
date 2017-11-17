@@ -1,0 +1,19 @@
+language: php
+
+php:
+  - 7.1
+
+services:
+  - mysql
+
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS `travis-ci`;'
+
+before_script:
+  - cp .env.travis .env
+  - composer self-update
+  - composer install --prefer-source --no-interaction
+  - php artisan key:generate
+  - php artisan migrate --force --no-interaction
+
+script: vendor/bin/phpunit
