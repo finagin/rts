@@ -11,6 +11,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $env = studly_case(env('APP_ENV'));
+
+        $UsersTableSeeder = 'Seeds\\'.$env.'\\UsersTableSeeder';
+
+        $this->call($UsersTableSeeder);
     }
 }
