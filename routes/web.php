@@ -33,4 +33,17 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
             'managers' => 'user',
         ],
     ]);
+
+    Route::group(['prefix' => 'artisans', 'as' => 'artisans.'], function () {
+        Route::resource('skills', 'SkillController', [
+            'only' => [
+                'index',
+                'create',
+                'store',
+                'edit',
+                'update',
+                'destroy',
+            ],
+        ]);
+    });
 });
