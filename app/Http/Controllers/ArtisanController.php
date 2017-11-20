@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Skill;
 use App\Models\User;
+use App\Models\Skill;
 use Illuminate\Http\Request;
 use App\Http\Requests\Artisan\Store;
 use App\Http\Requests\Artisan\Update;
