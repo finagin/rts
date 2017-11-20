@@ -61,3 +61,14 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
         ]);
     });
 });
+
+Route::resource('cities', 'CityController', [
+    'only' => [
+        'index',
+        'create',
+        'store',
+        'edit',
+        'update',
+        'destroy',
+    ],
+]);
