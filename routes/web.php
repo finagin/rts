@@ -35,6 +35,20 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
     ]);
 
     Route::group(['prefix' => 'artisans', 'as' => 'artisans.'], function () {
+        Route::resource('', 'ArtisanController', [
+            'only' => [
+                'index',
+                'create',
+                'store',
+                'edit',
+                'update',
+                'destroy',
+            ],
+            'parameters' => [
+                '' => 'user',
+            ],
+        ]);
+
         Route::resource('skills', 'SkillController', [
             'only' => [
                 'index',
