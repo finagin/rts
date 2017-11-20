@@ -57,6 +57,11 @@
                                             Менеджеры
                                         </a>
                                     </li>
+                                    <li>
+                                        <a href="{{ route('users.artisans.index') }}">
+                                            Мастера
+                                        </a>
+                                    </li>
                                 </ul>
                             </li>
                             <li class="dropdown">
