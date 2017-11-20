@@ -59,4 +59,17 @@ class User extends Authenticatable
     {
         return $this->skills->pluck('id')->search($skill_id) !== false;
     }
+
+    /**
+     * The cities that belong to the user.
+     */
+    public function cities()
+    {
+        return $this->belongsToMany(City::class);
+    }
+
+    public function hasCity($city_id)
+    {
+        return $this->cities->pluck('id')->search($city_id) !== false;
+    }
 }

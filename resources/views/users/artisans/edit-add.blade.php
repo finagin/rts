@@ -32,7 +32,24 @@
                             <input type="hidden" id="password" name="password"
                                    value="{{ old('password', $user->password ?? '') }}">
                             <input type="hidden" id="type" name="type" value="artisan">
-                            <div class="form-group {{ $errors->has('name') ? 'has-error' : '' }}">
+                            <div class="form-group {{ $errors->has('city') ? 'has-error' : '' }}">
+                                <label class="control-label" for="cities">
+                                    Город
+                                </label>
+                                <select class="form-control" id="cities" name="cities[]">
+                                    <option selected disabled>
+                                        Выберите город
+                                    </option>
+                                    @foreach($cities as $city)
+                                        <option value="{{ $city->id }}"
+                                        @if($user->hasCity($city->id)){{ 'selected' }}@endif>
+                                            {{ $city->title }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <p class="help-block"></p>
+                            </div>
+                            <div class="form-group">
                                 <label class="control-label">
                                     Навыки
                                 </label>

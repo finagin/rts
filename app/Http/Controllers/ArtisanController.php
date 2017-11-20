@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
 use App\Models\User;
 use App\Models\Skill;
 use Illuminate\Http\Request;
@@ -112,8 +113,9 @@ class ArtisanController extends Controller
         }
 
         $skills = Skill::all();
+        $cities = City::all();
 
-        return view('users.artisans.edit-add', compact('user', 'skills'));
+        return view('users.artisans.edit-add', compact('user', 'skills', 'cities'));
     }
 
     /**
@@ -128,6 +130,7 @@ class ArtisanController extends Controller
     {
         $fillable = $request->only('name', 'email', 'password', 'type');
         $skills = collect($request->input('skills'))->keys();
+        $cities = $request->input('cities');
 
         if ($user && $user->id) {
             $user->update($fillable);
@@ -152,6 +155,7 @@ class ArtisanController extends Controller
         }
 
         $user->skills()->sync($skills);
+        $user->cities()->sync($cities);
 
         return redirect(route('users.artisans.index'))->with(compact('status'));
     }

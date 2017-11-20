@@ -24,4 +24,12 @@ class City extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * The artisans that belong to the city.
+     */
+    public function artisans()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

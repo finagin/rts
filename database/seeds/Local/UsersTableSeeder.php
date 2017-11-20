@@ -33,6 +33,8 @@ class UsersTableSeeder extends Seeder
                 if ($user->type == 'artisan') {
                     $user->skills()
                         ->sync($skills->random(random_int(2, 7)));
+                    $user->city()
+                        ->sync($skills->random());
                 }
             });
     }
