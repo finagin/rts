@@ -46,4 +46,17 @@ class User extends Authenticatable
     {
         return $query->where('type', $type);
     }
+
+    /**
+     * The skills that belong to the user.
+     */
+    public function skills()
+    {
+        return $this->belongsToMany(Skill::class);
+    }
+
+    public function hasSkill($skill_id)
+    {
+        return $this->skills->pluck('id')->search($skill_id) !== false;
+    }
 }

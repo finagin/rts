@@ -3,6 +3,7 @@
 namespace Seeds\Local;
 
 use App\Models\User;
+use App\Models\Skill;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -24,6 +25,15 @@ class UsersTableSeeder extends Seeder
             'type' => 'manager',
         ]);
 
-        factory(User::class, 50)->create();
+        $skills = Skill::all();
+
+        factory(User::class, 50)
+            ->create()
+            ->each(function ($user) use ($skills) {
+                if ($user->type == 'artisan') {
+                    $user->skills()
+                        ->sync($skills->random(random_int(2, 7)));
+                }
+            });
     }
 }

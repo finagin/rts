@@ -25,4 +25,12 @@ class Skill extends Model
      * @var array
      */
     protected $dates = ['deleted_at'];
+
+    /**
+     * The users that belong to the skill.
+     */
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
