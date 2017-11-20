@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use App\Http\Requests\Artisan\Store;
 use App\Http\Requests\Artisan\Update;
-use App\Models\User;
 use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
 
 class ArtisanController extends Controller
 {
@@ -140,7 +140,8 @@ class ArtisanController extends Controller
                 try {
                     $user = User::create($fillable);
                     $bool = false;
-                } catch (QueryException $e) {}
+                } catch (QueryException $e) {
+                }
             } while ($bool);
 
             $status = 'Мастер <b>'.$user->name.'</b> успешно добавлен.';
