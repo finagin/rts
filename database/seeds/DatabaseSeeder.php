@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
         $UsersTableSeeder = 'Seeds\\'.$env.'\\UsersTableSeeder';
         $SkillsTableSeeder = 'Seeds\\'.$env.'\\SkillsTableSeeder';
 
-        $this->call($UsersTableSeeder);
         $this->call($SkillsTableSeeder);
+        $this->call($UsersTableSeeder);
     }
 }

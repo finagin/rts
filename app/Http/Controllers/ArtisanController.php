@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Skill;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\Artisan\Store;
@@ -110,7 +111,9 @@ class ArtisanController extends Controller
             return redirect(route('users.artisans.index'))->withErrors(['type' => 'Ошибка типа пользователя.']);
         }
 
-        return view('users.artisans.edit-add', compact('user'));
+        $skills = Skill::all();
+
+        return view('users.artisans.edit-add', compact('user', 'skills'));
     }
 
     /**
@@ -124,6 +127,7 @@ class ArtisanController extends Controller
     protected function insertOrUpdate(Request $request, User $user)
     {
         $fillable = $request->only('name', 'email', 'password', 'type');
+        $skills = collect($request->input('skills'))->keys();
 
         if ($user && $user->id) {
             $user->update($fillable);
@@ -146,6 +150,8 @@ class ArtisanController extends Controller
 
             $status = 'Мастер <b>'.$user->name.'</b> успешно добавлен.';
         }
+
+        $user->skills()->sync($skills);
 
         return redirect(route('users.artisans.index'))->with(compact('status'));
     }

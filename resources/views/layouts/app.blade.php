@@ -57,9 +57,15 @@
                                             Менеджеры
                                         </a>
                                     </li>
+                                    <li role="separator" class="divider"></li>
                                     <li>
                                         <a href="{{ route('users.artisans.index') }}">
                                             Мастера
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('users.artisans.skills.index') }}">
+                                            Навыки
                                         </a>
                                     </li>
                                 </ul>
