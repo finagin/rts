@@ -2,8 +2,8 @@
 
 namespace Seeds\Local;
 
-use App\Models\Skill;
 use App\Models\User;
+use App\Models\Skill;
 use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
