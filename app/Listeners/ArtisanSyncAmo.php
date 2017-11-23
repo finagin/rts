@@ -4,8 +4,6 @@ namespace App\Listeners;
 
 use App\Events\ArtisanSaved;
 use Dotzero\LaravelAmoCrm\Facades\AmoCrm;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
 class ArtisanSyncAmo
 {
@@ -43,7 +41,7 @@ class ArtisanSyncAmo
         $element->addCustomField(config('amocrm.custom_fields.artisans.id'), 'ID:'.$user->id);
 
         $skills = $user->skills->map(function ($skill) {
-            return [$skill->slug, $skill->id,];
+            return [$skill->slug, $skill->id];
         });
         if ($skills->isNotEmpty()) {
             $element->addCustomField(config('amocrm.custom_fields.artisans.skills'), $skills->toArray(), true);

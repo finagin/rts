@@ -53,10 +53,10 @@ return [
 
     'custom_fields' => [
         'artisans' => [
-            'id' => env('AMO__CUSTOM_FIELDS__ARTISAN__ID',378946),
+            'id' => env('AMO__CUSTOM_FIELDS__ARTISAN__ID', 378946),
             'skills' => env('AMO__CUSTOM_FIELDS__ARTISAN__SKILLS', 390646),
             'cities' => env('AMO__CUSTOM_FIELDS__ARTISAN__CITIES', 114800),
-        ]
+        ],
     ],
 
 ];

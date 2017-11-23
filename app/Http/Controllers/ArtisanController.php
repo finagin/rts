@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\City;
+use App\Models\User;
+use App\Models\Skill;
 use App\Events\ArtisanSaved;
+use Illuminate\Http\Request;
 use App\Http\Requests\Artisan\Store;
 use App\Http\Requests\Artisan\Update;
-use App\Models\City;
-use App\Models\Skill;
-use App\Models\User;
-use Dotzero\LaravelAmoCrm\Facades\AmoCrm;
 use Illuminate\Database\QueryException;
-use Illuminate\Http\Request;
+use Dotzero\LaravelAmoCrm\Facades\AmoCrm;
 
 class ArtisanController extends Controller
 {
