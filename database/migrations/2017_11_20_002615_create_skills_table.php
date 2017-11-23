@@ -14,10 +14,10 @@ class CreateSkillsTable extends Migration
     public function up()
     {
         Schema::create('skills', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id')->unsigned();
 
             $table->string('slug', 25);
-            $table->string('description', 255);
+            $table->string('description', 255)->nullanle();
 
             $table->timestamps();
             $table->softDeletes();

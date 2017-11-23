@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\City;
-use App\Models\User;
-use App\Models\Skill;
-use Illuminate\Http\Request;
+use App\Events\ArtisanSaved;
 use App\Http\Requests\Artisan\Store;
 use App\Http\Requests\Artisan\Update;
+use App\Models\City;
+use App\Models\Skill;
+use App\Models\User;
+use Dotzero\LaravelAmoCrm\Facades\AmoCrm;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
 class ArtisanController extends Controller
 {
@@ -112,8 +114,30 @@ class ArtisanController extends Controller
             return redirect(route('users.artisans.index'))->withErrors(['type' => 'Ошибка типа пользователя.']);
         }
 
-        $skills = Skill::all();
-        $cities = City::all();
+        $cfs = AmoCrm::getClient()->account->apiCurrent()['custom_fields'][config('amocrm.catalog.artisans')];
+
+        foreach ($cfs as $custom_field) {
+            if ($custom_field['id'] == config('amocrm.custom_fields.artisans.skills')) {
+                $skills = collect($custom_field['enums'])->map(function ($item, $key) {
+                    Skill::updateOrCreate([
+                        'id' => $key,
+                    ], [
+                        'slug' => $item,
+                        'description' => $item,
+                    ]);
+
+                    return Skill::find($key);
+                });
+            } elseif ($custom_field['id'] == config('amocrm.custom_fields.artisans.cities')) {
+                $cities = collect($custom_field['enums'])->map(function ($item, $key) {
+                    return City::updateOrCreate([
+                        'id' => $key,
+                    ], [
+                        'title' => $item,
+                    ]);
+                });
+            }
+        }
 
         return view('users.artisans.edit-add', compact('user', 'skills', 'cities'));
     }
@@ -156,6 +180,8 @@ class ArtisanController extends Controller
 
         $user->skills()->sync($skills);
         $user->cities()->sync($cities);
+
+        event(new ArtisanSaved($user));
 
         return redirect(route('users.artisans.index'))->with(compact('status'));
     }
