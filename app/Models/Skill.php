@@ -15,6 +15,7 @@ class Skill extends Model
      * @var array
      */
     protected $fillable = [
+        'id',
         'slug',
         'description',
     ];

@@ -34,41 +34,17 @@ Route::group(['prefix' => 'users', 'as' => 'users.'], function () {
         ],
     ]);
 
-    Route::group(['prefix' => 'artisans', 'as' => 'artisans.'], function () {
-        Route::resource('', 'ArtisanController', [
-            'only' => [
-                'index',
-                'create',
-                'store',
-                'edit',
-                'update',
-                'destroy',
-            ],
-            'parameters' => [
-                '' => 'user',
-            ],
-        ]);
-
-        Route::resource('skills', 'SkillController', [
-            'only' => [
-                'index',
-                'create',
-                'store',
-                'edit',
-                'update',
-                'destroy',
-            ],
-        ]);
-    });
+    Route::resource('artisans', 'ArtisanController', [
+        'only' => [
+            'index',
+            'create',
+            'store',
+            'edit',
+            'update',
+            'destroy',
+        ],
+        'parameters' => [
+            'artisans' => 'user',
+        ],
+    ]);
 });
-
-Route::resource('cities', 'CityController', [
-    'only' => [
-        'index',
-        'create',
-        'store',
-        'edit',
-        'update',
-        'destroy',
-    ],
-]);
