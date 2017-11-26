@@ -5,7 +5,15 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Пользователи » Менеджеры</div>
+                    <div class="panel-heading">
+                        Пользователи »
+                        @if(! is_null($area))
+                            <a href="{{ route('users.managers.index') }}">Менеджеры</a>
+                            » {{ $area->title }}
+                        @else
+                            Менеджеры
+                        @endif
+                    </div>
 
                     <div class="panel-body">
                         @includeIf('common.status')
@@ -40,6 +48,13 @@
                                         </th>
                                         <td>
                                             {{ $user->name }}
+                                            @if(! is_null($user->area))
+                                                <a href="{{ route('users.managers.index', ['area' => $user->area->id]) }}">
+                                                    <span class="label label-default">
+                                                        {{ $user->area->title }}
+                                                    </span>
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             <div class="pull-right">
@@ -53,11 +68,12 @@
                         </div>
                         <div class="panel-body">
                             <div class="text-center">
-                                {{ $users->links() }}
+                                {{ $users->appends([] + (! is_null($area) ? ['area' => $area->id] : []))->links() }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 @endsection

@@ -17,14 +17,23 @@ class ArtisanController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::ofType('artisan')
-            ->paginate();
+        $users = User::ofType('artisan');
 
-        return view('users.artisans.brows', compact('users'));
+        if ($request->has('city')) {
+            $users = $users->ofCity($request->input('city'));
+            $city = City::find($request->input('city'));
+        } else {
+            $city = null;
+        }
+
+        $users = $users->paginate();
+
+        return view('users.artisans.brows', compact('users', 'city'));
     }
 
     /**

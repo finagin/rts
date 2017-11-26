@@ -1,4 +1,17 @@
 {{-- Right Side Of Navbar --}}
+<li>
+    <a href="{{ route('cities.index') }}">
+        Города
+        @php
+            $cities_errors = \App\Models\City::whereNull('area_id')->get()
+        @endphp
+        @if($cities_errors->isNotEmpty())
+            <span class="label label-danger">
+                {{ $cities_errors->count() }}
+            </span>
+        @endif
+    </a>
+</li>
 <li class="dropdown">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
         Пользователи <span class="caret"></span>

@@ -7,15 +7,15 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Города »
-                        @if($city && $city->id){{ 'Редактирование "'.$city->title.'"' }}@else{{ 'Новый' }}@endif
+                        @if($area && $area->id){{ 'Редактирование "'.$area->title.'"' }}@else{{ 'Новый' }}@endif
                     </div>
 
                     <div class="panel-body">
                         @includeIf('common.status')
 
-                        <form action="{{ route('cities.'.($city && $city->id ? 'update' : 'store'), $city) }}"
+                        <form action="{{ route('areas.'.($area && $area->id ? 'update' : 'store'), $area) }}"
                               method="post">
-                            @if($city && $city->id){{ method_field('PUT') }}@endif
+                            @if($area && $area->id){{ method_field('PUT') }}@endif
                             {{ csrf_field() }}
 
                             <div class="form-group {{ $errors->has('title') ? 'has-error' : '' }}">
@@ -23,24 +23,24 @@
                                     Название
                                 </label>
                                 <input type="text" class="form-control" id="title" name="title"
-                                       placeholder="Название" required readonly
-                                       value="{{ old('title', $city->title ?? '') }}">
+                                       placeholder="Название" required
+                                       value="{{ old('title', $area->title ?? '') }}">
                                 <p class="help-block"></p>
                             </div>
-                            <div class="form-group {{ $errors->has('area_id') ? 'has-error' : '' }}">
-                                <label class="control-label" for="area_id">
+                            <div class="form-group {{ $errors->has('parent_id') ? 'has-error' : '' }}">
+                                <label class="control-label" for="parent_id">
                                     Название
                                 </label>
-                                <select class="form-control" id="area_id" name="area_id" required>
-                                    <option disabled selected>Выберите зону</option>
-                                    @includeIf('cities.edit-add.tree', ['areas' => $areas])
+                                <select class="form-control" id="parent_id" name="parent_id" required>
+                                    <option disabled selected>Выберите родительскую зону</option>
+                                    @includeIf('areas.edit-add.tree', ['areas' => $areas, 'self' => $area])
                                 </select>
                                 <p class="help-block"></p>
                             </div>
                             <div class="row">
                                 <div class="col-md-3">
                                     <button type="submit" class="btn btn-block btn-primary">
-                                        @if($city && $city->id)
+                                        @if($area && $area->id)
                                             Сохранить
                                         @else
                                             Создать

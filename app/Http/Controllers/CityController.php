@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\City;
 use Illuminate\Http\Request;
 
@@ -14,9 +15,11 @@ class CityController extends Controller
      */
     public function index()
     {
-        $cities = City::paginate();
+        $cities = City::orderByRaw('area_id IS NULL DESC')->paginate();
 
-        return view('cities.brows', compact('cities'));
+        $areas = Area::all()->toTree();
+
+        return view('cities.brows', compact('cities', 'areas'));
     }
 
     /**
@@ -100,7 +103,9 @@ class CityController extends Controller
      */
     protected function viewCreateOrEdit(City $city)
     {
-        return view('cities.edit-add', compact('city'));
+        $areas = Area::all()->toTree();
+
+        return view('cities.edit-add', compact('city', 'areas'));
     }
 
     /**
@@ -115,6 +120,7 @@ class CityController extends Controller
     {
         $fillable = $request->validate([
             'title' => 'required|string|max:63|unique:cities'.($city && $city->id ? ',title,'.$city->id : ''),
+            'area_id' => 'required',
         ]);
 
         if ($city && $city->id) {
@@ -124,6 +130,10 @@ class CityController extends Controller
             $city = City::create($fillable);
             $status = 'Мастер <b>'.$city->title.'</b> успешно изменён.';
         }
+
+        $area = Area::find($fillable['area_id']);
+
+        $area->managers()->save($city);
 
         return redirect(route('cities.index'))->with(compact('status'));
     }

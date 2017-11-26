@@ -42,6 +42,16 @@
                                        value="{{ old('password', $user->password ?? '') }}">
                                 <p class="help-block"></p>
                             </div>
+                            <div class="form-group {{ $errors->has('area_id') ? 'has-error' : '' }}">
+                                <label class="control-label" for="area_id">
+                                    Название
+                                </label>
+                                <select class="form-control" id="area_id" name="area_id" required>
+                                    <option disabled selected>Выберите зону</option>
+                                    @includeIf('users.managers.edit-add.tree', ['areas' => $areas])
+                                </select>
+                                <p class="help-block"></p>
+                            </div>
                             <input type="hidden" id="type" name="type" value="manager">
                             <div class="row">
                                 <div class="col-md-3">

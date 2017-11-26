@@ -14,7 +14,9 @@ class DatabaseSeeder extends Seeder
         $env = studly_case(env('APP_ENV'));
 
         $UsersTableSeeder = 'Seeds\\'.$env.'\\UsersTableSeeder';
+        $AreasTableSeeder = 'Seeds\\'.$env.'\\AreasTableSeeder';
 
         $this->call($UsersTableSeeder);
+        $this->call($AreasTableSeeder);
     }
 }

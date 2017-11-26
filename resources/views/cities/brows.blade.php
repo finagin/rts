@@ -9,14 +9,6 @@
 
                     <div class="panel-body">
                         @includeIf('common.status')
-
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3">
-                                <a href="{{ route('cities.create') }}" class="btn btn-lg btn-block btn-primary">
-                                    Новый город
-                                </a>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="panel-table">
@@ -27,19 +19,37 @@
                                     <th>
                                         #
                                     </th>
-                                    <th colspan="2">
+                                    <th>
                                         Имя
+                                    </th>
+                                    <th>
+                                        Мастера
+                                    </th>
+                                    <th colspan="2">
+                                        Зона
                                     </th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @foreach($cities as $city)
-                                    <tr>
+                                    <tr class="{{ is_null($city->area_id) ? 'danger' : '' }}">
                                         <th>
                                             {{ $loop->iteration + (($cities->currentPage() - 1) * $cities->perPage()) }}
                                         </th>
                                         <td>
                                             {{ $city->title }}
+                                        </td>
+                                        <td>
+                                            <a href="{{ route('users.artisans.index', ['city' => $city->id]) }}">
+                                                {{ $city->artisans()->count() }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @if(! is_null($city->area))
+                                                <a href="{{ route('users.managers.index', ['area' => $city->area->id]) }}">
+                                                    {{ $city->area->title }}
+                                                </a>
+                                            @endif
                                         </td>
                                         <td>
                                             <div class="pull-right">
