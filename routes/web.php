@@ -68,16 +68,3 @@ Route::resource('areas', 'AreaController', [
         'destroy',
     ],
 ]);
-
-Route::get('test', function () {
-    dd(\App\Models\Area::descendantsAndSelf(3));
-
-    $node_1 = \App\Models\Area::create(['title' => 'Node #1']);
-    $node_2 = \App\Models\Area::create(['title' => 'Node #2']);
-    $node_3 = \App\Models\Area::create(['title' => 'Node #3']);
-    $node_4 = \App\Models\Area::create(['title' => 'Node #4']);
-
-    $node_1->appendNode($node_2);
-    $node_2->appendNode($node_3);
-    $node_1->appendNode($node_4);
-});
