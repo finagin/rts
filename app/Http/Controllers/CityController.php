@@ -120,7 +120,7 @@ class CityController extends Controller
     {
         $fillable = $request->validate([
             'title' => 'required|string|max:63|unique:cities'.($city && $city->id ? ',title,'.$city->id : ''),
-            'area_id' => 'required'
+            'area_id' => 'required',
         ]);
 
         if ($city && $city->id) {

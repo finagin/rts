@@ -70,7 +70,6 @@ Route::resource('areas', 'AreaController', [
 ]);
 
 Route::get('test', function () {
-
     dd(\App\Models\Area::descendantsAndSelf(3));
 
     $node_1 = \App\Models\Area::create(['title' => 'Node #1']);
