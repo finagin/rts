@@ -5,7 +5,15 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Пользователи » Мастера</div>
+                    <div class="panel-heading">
+                        Пользователи »
+                        @if(! is_null($city))
+                            <a href="{{ route('users.artisans.index') }}">Мастера</a>
+                            » {{ $city->title }}
+                        @else
+                            Мастера
+                        @endif
+                    </div>
 
                     <div class="panel-body">
                         @includeIf('common.status')
@@ -53,11 +61,12 @@
                         </div>
                         <div class="panel-body">
                             <div class="text-center">
-                                {{ $users->links() }}
+                                {{ $users->appends([] + (! is_null($city) ? ['city' => $city->id] : []))->links() }}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 @endsection

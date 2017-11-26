@@ -47,6 +47,20 @@ class User extends Authenticatable
         return $query->where('type', $type);
     }
 
+    public function scopeOfCity($query, $city)
+    {
+        return $query->whereHas('cities', function ($query) use ($city) {
+            $query->where('id', $city);
+        });
+    }
+
+    public function scopeOfArea($query, $area)
+    {
+        return $query->whereHas('area', function ($query) use ($area) {
+            $query->where('id', $area);
+        });
+    }
+
     /**
      * The skills that belong to the user.
      */
@@ -71,5 +85,13 @@ class User extends Authenticatable
     public function hasCity($city_id)
     {
         return $this->cities->pluck('id')->search($city_id) !== false;
+    }
+
+    /**
+     * Get the area that owns the user.
+     */
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
     }
 }

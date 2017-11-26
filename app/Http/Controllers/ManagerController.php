@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Area;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\Manager\Store;
@@ -12,14 +13,23 @@ class ManagerController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::ofType('manager')
-            ->paginate();
+        $users = User::ofType('manager');
 
-        return view('users.managers.brows', compact('users'));
+        if ($request->has('area')) {
+            $users = $users->ofArea($request->input('area'));
+            $area = Area::find($request->input('area'));
+        } else {
+            $area = null;
+        }
+
+        $users = $users->paginate();
+
+        return view('users.managers.brows', compact('users', 'area'));
     }
 
     /**
@@ -105,7 +115,9 @@ class ManagerController extends Controller
             return redirect(route('users.managers.index'))->withErrors(['type' => 'Ошибка типа пользователя.']);
         }
 
-        return view('users.managers.edit-add', compact('user'));
+        $areas = Area::all()->toTree();
+
+        return view('users.managers.edit-add', compact('user', 'areas'));
     }
 
     /**
@@ -118,7 +130,7 @@ class ManagerController extends Controller
      */
     protected function insertOrUpdate(Request $request, User $user)
     {
-        $fillable = $request->only('name', 'email', 'password', 'type');
+        $fillable = $request->only('name', 'email', 'password', 'type', 'area_id');
 
         if ($user && $user->id) {
             $user->update($fillable);
@@ -127,6 +139,10 @@ class ManagerController extends Controller
             $user = User::create($fillable);
             $status = 'Менеджер <b>'.$user->name.'</b> успешно добавлен.';
         }
+
+        $area = Area::find($fillable['area_id']);
+
+        $area->cities()->save($user);
 
         return redirect(route('users.managers.index'))->with(compact('status'));
     }

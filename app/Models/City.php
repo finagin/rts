@@ -33,4 +33,12 @@ class City extends Model
     {
         return $this->belongsToMany(User::class);
     }
+
+    /**
+     * Get the area that owns the city.
+     */
+    public function area()
+    {
+        return $this->belongsTo(Area::class);
+    }
 }
