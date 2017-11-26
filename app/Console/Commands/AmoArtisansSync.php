@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\AmoArtisansSync as AmoArtisansSyncJob;
-use App\Traits\Console\Commands\AmoArtisansEach;
 use Illuminate\Console\Command;
 use Dotzero\LaravelAmoCrm\Facades\AmoCrm;
+use App\Traits\Console\Commands\AmoArtisansEach;
+use App\Jobs\AmoArtisansSync as AmoArtisansSyncJob;
 
 class AmoArtisansSync extends Command
 {

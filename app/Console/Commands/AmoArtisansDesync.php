@@ -3,9 +3,9 @@
 namespace App\Console\Commands;
 
 use App\Models\User;
-use App\Traits\Console\Commands\AmoArtisansEach;
-use Dotzero\LaravelAmoCrm\Facades\AmoCrm;
 use Illuminate\Console\Command;
+use Dotzero\LaravelAmoCrm\Facades\AmoCrm;
+use App\Traits\Console\Commands\AmoArtisansEach;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AmoArtisansDesync extends Command

@@ -2,16 +2,16 @@
 
 namespace App\Jobs;
 
-use AmoCRM\Exception as AmoCRMException;
 use App\Models\User;
-use Dotzero\LaravelAmoCrm\Facades\AmoCrm;
 use Illuminate\Bus\Queueable;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Database\QueryException;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Database\QueryException;
+use AmoCRM\Exception as AmoCRMException;
 use Illuminate\Queue\InteractsWithQueue;
+use Dotzero\LaravelAmoCrm\Facades\AmoCrm;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AmoArtisansSync implements ShouldQueue
 {
@@ -93,7 +93,7 @@ class AmoArtisansSync implements ShouldQueue
                 $skills = collect($custom_field['values'])->pluck('enum');
 
                 $user->skills()->sync($skills);
-            } elseif($custom_field['id'] == config('amocrm.custom_fields.artisans.cities')){
+            } elseif ($custom_field['id'] == config('amocrm.custom_fields.artisans.cities')) {
                 $cities = collect($custom_field['values'])->pluck('enum');
 
                 $user->cities()->sync($cities);
